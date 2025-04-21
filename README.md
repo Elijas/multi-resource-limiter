@@ -1,6 +1,17 @@
 # multi-resource-limiter
 
-[No good solution existed](https://gist.github.com/justinvanwinkle/d9f04950083c4554835c1a35f9d22dad) for rate limiting multiple quotas (e.g. satisfy all: request/minute AND token/minute AND cost_usd/minute AND requesttoken/minute AND completiontoken/minute, etc.), so I built as a fork of [openlimit](https://github.com/shobrook/openlimit/issues/20#issuecomment-2782677483). Treat this as an early preview (no unit tests or extensive testing) but it was stable and worked correctly for my use cases.
+- Rate-limit multiple resources such as requests or tokens or apples and bananas at the same time
+  - This is needed because different APIs have different resource rules, e,g, Anthropic counts request and completion tokens separately.
+  - While this was originally intended for LLM APIs, it's fully customizable: you can limit bananas per 32 seconds time windows and apples per 2 minutes simultaneously. You can also connect (through Dependency Injection) your own backend if you don't want Redis.
+- Rate-limit multiple resource consumers (such as LLM calling applications that are using the same API key and model).
+- Rate-limit same resource across multiple time-frames
+- Rate-limit each resource on it's own set of quotas
+- Reserve usage while the request is being completed, and then refund/adjust according to actual usage after the request completes
+- Refund unused resources (such as unused tokens).
+
+THis is a tool I built as a rewrite of [openlimit](https://github.com/shobrook/openlimit/issues/20#issuecomment-2782677483) after [not finding any good python rate limiting solutions](https://gist.github.com/justinvanwinkle/d9f04950083c4554835c1a35f9d22dad), especially the ones that would be suitable for token-aware rate limiting.
+
+Treat this as an early preview (no unit tests or extensive testing) but it was stable and worked correctly for my use cases.
 
 ### Features
 
@@ -52,10 +63,4 @@ Here are the key features of `multi-resource-limiter`, explained:
 
 ### Getting started
 
-For out of the box experience just do `limiter = create_openai_redis_rate_limiter()`, and use it as in the [example-1](https://github.com/shobrook/openlimit/issues/20#issuecomment-2782677483) or [example-2](https://gist.github.com/justinvanwinkle/d9f04950083c4554835c1a35f9d22dad)
-
-Note, that it's fully customizable
-
-- You can limit bananas per 32 seconds and apples per 2 minutes
-- You can use your own backend (e.g. in-memory, in-database, etc.) instead of Redis, etc.
-- etc.
+For out of the box experience just do `limiter = create_openai_redis_rate_limiter()`, and use it as in the [example-1](https://github.com/shobrook/openlimit/issues/20#issuecomment-2782677483) or [example-2](https://gist.github.com/justinvanwinkle/d9f04950083c4554835c1a35f9d22dad). Otherwise, copy the function and customize it to your needs.
