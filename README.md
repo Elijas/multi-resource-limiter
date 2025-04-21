@@ -9,7 +9,7 @@
 - Reserve usage while the request is being completed, and then refund/adjust according to actual usage after the request completes
 - Refund unused resources (such as unused tokens).
 
-THis is a tool I built as a rewrite of [openlimit](https://github.com/shobrook/openlimit/issues/20#issuecomment-2782677483) after [not finding any good python rate limiting solutions](https://gist.github.com/justinvanwinkle/d9f04950083c4554835c1a35f9d22dad), especially the ones that would be suitable for token-aware rate limiting.
+This is a tool I built as a rewrite of [openlimit](https://github.com/shobrook/openlimit/issues/20#issuecomment-2782677483) after [not finding any good python rate limiting solutions](https://gist.github.com/justinvanwinkle/d9f04950083c4554835c1a35f9d22dad), especially the ones that would be suitable for token-aware rate limiting.
 
 Treat this as an early preview (no unit tests or extensive testing) but it was stable and worked correctly for my use cases.
 
