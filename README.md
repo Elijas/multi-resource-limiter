@@ -57,5 +57,5 @@ For out of the box experience just do `limiter = create_openai_redis_rate_limite
 Note, that it's fully customizable
 
 - You can limit bananas per 32 seconds and apples per 2 minutes
-- You can use your own backend (e.g. in-memory, redis, etc.) instead of Redis, etc.
+- You can use your own backend (e.g. in-memory, in-database, etc.) instead of Redis, etc.
 - etc.
