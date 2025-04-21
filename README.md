@@ -1,6 +1,6 @@
 # multi-resource-limiter
 
-[No good solution existed](https://gist.github.com/justinvanwinkle/d9f04950083c4554835c1a35f9d22dad) for rate limiting multiple quotas request/minute AND token/minute AND cost_usd/minute AND requesttoken/minute AND completiontoken/minute, so I built as a fork of [openlimit](https://github.com/shobrook/openlimit/issues/20#issuecomment-2782677483). Treat this as an early preview more rather than a stable production release, but it satisfied for my needs.
+[No good solution existed](https://gist.github.com/justinvanwinkle/d9f04950083c4554835c1a35f9d22dad) for rate limiting multiple quotas (e.g. satisfy all: request/minute AND token/minute AND cost_usd/minute AND requesttoken/minute AND completiontoken/minute, etc.), so I built as a fork of [openlimit](https://github.com/shobrook/openlimit/issues/20#issuecomment-2782677483). Treat this as an early preview more rather than a stable production release, but it satisfied for my needs.
 
 ### Features
 
