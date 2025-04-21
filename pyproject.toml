@@ -1,0 +1,9 @@
+[project]
+name = "multi-resource-limiter"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "redis>=5.2.1",
+]
