@@ -2,7 +2,7 @@
 
 - Rate-limit multiple resources such as requests and tokens and apples and bananas at the same time
   - This is needed because different APIs have different resource rules, e,g, Anthropic counts request and completion tokens separately.
-  - While this was originally intended for LLM APIs, it's fully customizable: you can limit bananas per 32 seconds time windows and apples per 2 minutes simultaneously. You can also connect (through Dependency Injection) your own backend if you don't want Redis.
+  - While this was originally intended for LLM APIs, it's fully customizable: you can limit bananas per 32-second-time-windows and apples per 2-minute-window simultaneously. You can also connect (through Dependency Injection) your own backend if you don't want Redis.
 - Rate-limit multiple resource consumers (such as LLM calling applications that are using the same API key and model).
 - Rate-limit same resource across multiple time-frames
 - Rate-limit each resource on it's own set of quotas
