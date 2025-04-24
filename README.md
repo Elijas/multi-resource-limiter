@@ -70,6 +70,7 @@ async def massively_parallelized():
     # Now two things happened:
     # 1. Actual usage recorded 
     #    (e.g. got a capacity refund for unused output tokens)
+    #    (e.g. a negative refund is also possible if actual usage exceeded the expected one)
     # 2. timestamp of the usage was moved to be the last token generated
 
 ```
