@@ -17,6 +17,63 @@ This is a tool I built as a rewrite of [openlimit](https://github.com/shobrook/o
 
 Treat this as an early preview (no unit tests or extensive testing) but it was stable and worked correctly for my use cases.
 
+
+### Illustrating example
+
+
+
+```python
+from baml_client import b
+from baml_py import Collector
+token_counter = Collector()
+b = b.with_options(token_counter)
+
+limiter = create_limiter([
+    # Let's say your production only uses up to 10% of
+    # Then this should be set to 90% of your capacity
+    Quota(metric="requests", limit=90_000, per_seconds=60),
+    Quota(metric="tokens", limit=90_000_000, per_seconds=60),
+], backend=redis)
+
+async def massively_parallelized():
+    input_tokens = inp_tok(await b.request.ExtractResume(...))
+    # e.g. max_tokens value of the request
+    # e.g. or 95th percentile of usual b.ExtractResume() consumption
+    output_tokens = 10_000 
+
+    # Safe against race-condition and many clients
+    # because it uses Redis locks and atomic operations
+    reservation = await limiter.acquire_capacity(
+        model="gpt-4.1"
+        usage={
+            "requests": 1,
+            "tokens": input_tokens + output_tokens,
+
+            # Anthropic input and output tokens
+            # have separate rate limits:
+            #   "input_tokens": input_tokens
+            #   "output_tokens": output_tokens
+
+        }, 
+    )
+
+    # Request only continues here only after the capacity 
+    # has been reserved to not be consumed by any other LLM calls
+    c = Collector()
+    b = b.with_options(collector=c)
+    resume = await b.ExtractResume(...)
+    actual_usage = {
+        "requests": get_total_tokens(c),
+        "tokens": 1,
+    }
+    await limiter.refund_capacity(actual_usage, reservation)
+    # Now two things happened:
+    # 1. Actual usage recorded 
+    #    (e.g. got a capacity refund for unused output tokens)
+    # 2. timestamp of the usage was moved to be the last token generated
+
+```
+
 ### Features
 
 Here are the key features of `multi-resource-limiter`, explained:
@@ -64,6 +121,7 @@ Here are the key features of `multi-resource-limiter`, explained:
 
 - **Observability Hooks:**
   - Provides callbacks (`RateLimiterCallbacks`) for monitoring key events like starting to wait for capacity, consuming capacity, refunding capacity, and detecting missing state in the backend. Includes `loguru` integration helpers.
+
 
 ### Getting started
 
