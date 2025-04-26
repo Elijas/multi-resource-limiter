@@ -1,14 +1,14 @@
 import asyncio
 
-from multi_resource_limiter.interfaces.callbacks import RateLimiterCallbacks
-from multi_resource_limiter.interfaces.interfaces import (
+from multi_resource_rate_limiter._interfaces._callbacks import RateLimiterCallbacks
+from multi_resource_rate_limiter._interfaces._interfaces import (
     BaseRateLimiter,
     PerModelConfig,
     PerModelConfigGetter,
     RateLimiterBackend,
-    RateLimiterBackendBuilder,
+    RateLimiterBackendBuilderInterface,
 )
-from multi_resource_limiter.interfaces.models import (
+from multi_resource_rate_limiter._interfaces._models import (
     CapacityReservation,
     FrozenUsage,
     Usage,
@@ -23,7 +23,7 @@ class RateLimiter(BaseRateLimiter):
         self,
         cfg: PerModelConfig | PerModelConfigGetter,
         /,
-        backend: RateLimiterBackendBuilder,
+        backend: RateLimiterBackendBuilderInterface,
         *,
         callbacks: RateLimiterCallbacks | None = None,
     ):

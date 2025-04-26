@@ -1,23 +1,27 @@
 import asyncio
 import time
 import typing
-from collections import namedtuple
+import warnings
 from contextlib import AsyncExitStack
 from typing import TYPE_CHECKING, ClassVar
 
-import redis.asyncio
-import redis.asyncio.client
+try:
+    import redis.asyncio
+    import redis.asyncio.client
+except ImportError as exc:
+    raise ImportError(
+        'The "redis" package is required for the Redis backend. '
+        'Install it with: pip install "multi-resource-rate-limiter[redis]"'
+    ) from exc
 from frozendict import frozendict
-from loguru import logger
-from pydantic import BaseModel
 
-from multi_resource_limiter.interfaces.callbacks import RateLimiterCallbacks
-from multi_resource_limiter.interfaces.interfaces import (
+from multi_resource_rate_limiter._interfaces._callbacks import RateLimiterCallbacks
+from multi_resource_rate_limiter._interfaces._interfaces import (
     PerModelConfig,
     RateLimiterBackend,
-    RateLimiterBackendBuilder,
+    RateLimiterBackendBuilderInterface,
 )
-from multi_resource_limiter.interfaces.models import Capacities, FrozenUsage
+from multi_resource_rate_limiter._interfaces._models import Capacities, FrozenUsage
 
 from ._bucket import RedisBucket
 
@@ -33,7 +37,7 @@ if TYPE_CHECKING:
 LOCK_TIMEOUT_SECONDS = 30
 
 
-class RedisBackendBuilder(RateLimiterBackendBuilder):
+class RedisBackendBuilder(RateLimiterBackendBuilderInterface):
     def __init__(
         self,
         redis_client: redis.asyncio.Redis,
@@ -352,6 +356,7 @@ class RedisBackend(RateLimiterBackend):
             The refund will:
             1. Apply a negative refund of -20 tokens (100-120)
             2. Update the timestamp to N=10
+
         """
         # Calculate how much to refund for each metric
         refund_usage_: dict[str, float] = {}
@@ -361,9 +366,10 @@ class RedisBackend(RateLimiterBackend):
 
             # Check for overuse and log a warning
             if refund_amount < 0:
-                logger.warning(
+                warnings.warn(
                     f"Actual usage ({actual_amount}) for {metric} exceeds "
                     f"reserved usage ({reserved_amount}). Applying negative refund.",
+                    RuntimeWarning,
                 )
 
             # Include both positive and negative refunds

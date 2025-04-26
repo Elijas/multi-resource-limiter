@@ -1,12 +1,18 @@
 import time
 
-import redis.asyncio
-import redis.asyncio.client
-import redis.asyncio.lock
+try:
+    import redis.asyncio
+    import redis.asyncio.client
+    import redis.asyncio.lock
+except ImportError as exc:
+    raise ImportError(
+        'The "redis" package is required for the Redis backend. '
+        'Install it with: pip install "multi-resource-rate-limiter[redis]"'
+    ) from exc
 from pydantic import BaseModel
 
-from multi_resource_limiter.interfaces.interfaces import PerModelConfig
-from multi_resource_limiter.interfaces.models import Quota
+from multi_resource_rate_limiter._interfaces._interfaces import PerModelConfig
+from multi_resource_rate_limiter._interfaces._models import Quota
 
 
 class CalculatedCapacity(BaseModel):

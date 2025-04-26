@@ -1,6 +1,10 @@
 # multi-resource-rate-limiter
 
-[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Status: Experimental](https://img.shields.io/badge/status-experimental-gold.svg?style=flat)](https://github.com/mkenney/software-guides/blob/master/STABILITY-BADGES.md#experimental)
+[![Maintained: yes](https://img.shields.io/badge/yes-43cd0f.svg?style=flat&label=maintained)](https://github.com/Elijas/multi-resource-rate-limiter/issues)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-43cd0f.svg?style=flat&label=license)](LICENSE)
+<a href="https://pypi.org/project/multi-resource-rate-limiter"><img src="https://img.shields.io/badge/v0.1.1-version?color=43cd0f&style=flat&label=pypi" alt="PyPI version" /></a>
+<a href="https://github.com/astral-sh/ruff?style=flat"><img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json" alt="Ruff"></a>
 
 **Token-aware rate limiting with reservation-refund of unused tokens. Rate limit access to multiple resources with multiple resource quotas across multiple workers.**
 
@@ -17,10 +21,7 @@ This is a tool I built as a rewrite of [openlimit](https://github.com/shobrook/o
 
 Treat this as an early preview (no unit tests or extensive testing) but it was stable and worked correctly for my use cases.
 
-
 ### Illustrating example
-
-
 
 ```python
 from baml_client import b
@@ -39,7 +40,7 @@ async def massively_parallelized():
     input_tokens = inp_tok(await b.request.ExtractResume(...))
     # e.g. max_tokens value of the request
     # e.g. or 95th percentile of usual b.ExtractResume() consumption
-    output_tokens = 10_000 
+    output_tokens = 10_000
 
     # Safe against race-condition and many clients
     # because it uses Redis locks and atomic operations
@@ -54,10 +55,10 @@ async def massively_parallelized():
             #   "input_tokens": input_tokens
             #   "output_tokens": output_tokens
 
-        }, 
+        },
     )
 
-    # Request only continues here only after the capacity 
+    # Request only continues here only after the capacity
     # has been reserved to not be consumed by any other LLM calls
     c = Collector()
     b = b.with_options(collector=c)
@@ -68,7 +69,7 @@ async def massively_parallelized():
     }
     await limiter.refund_capacity(actual_usage, reservation)
     # Now two things happened:
-    # 1. Actual usage recorded 
+    # 1. Actual usage recorded
     #    (e.g. got a capacity refund for unused output tokens)
     #    (e.g. a negative refund is also possible if actual usage exceeded the expected one)
     # 2. timestamp of the usage was moved to be the last token generated
@@ -106,7 +107,7 @@ Here are the key features of `multi-resource-limiter`, explained:
 
 - **Pluggable Backend Architecture:**
 
-  - Core logic is separated from the storage mechanism via `RateLimiterBackend` and `RateLimiterBackendBuilder` interfaces.
+  - Core logic is separated from the storage mechanism via `RateLimiterBackend` and `RateLimiterBackendBuilderInterface` interfaces.
   - Ships with a robust `RedisBackend` for distributed rate limiting.
   - Allows implementing custom backends (e.g., in-memory for single process, other databases) if needed.
 
@@ -122,7 +123,6 @@ Here are the key features of `multi-resource-limiter`, explained:
 
 - **Observability Hooks:**
   - Provides callbacks (`RateLimiterCallbacks`) for monitoring key events like starting to wait for capacity, consuming capacity, refunding capacity, and detecting missing state in the backend. Includes `loguru` integration helpers.
-
 
 ### Getting started
 

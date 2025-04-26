@@ -1,16 +1,30 @@
 import re
 
-import redis.asyncio as redis
+try:
+    import redis.asyncio as redis
+except ImportError as exc:
+    raise ImportError(
+        'The "redis" package is required for the OpenAI Redis rate limiter backend. '
+        'Install it with: pip install "multi-resource-rate-limiter[redis]"'
+    ) from exc
 
-from multi_resource_limiter.factories.openai.token_counter import OpenAIUsageCounter
-from multi_resource_limiter.interfaces.callbacks import (
+from multi_resource_rate_limiter._factories._openai._token_counter import (
+    OpenAIUsageCounter,
+)
+from multi_resource_rate_limiter._interfaces._callbacks import (
     RateLimiterCallbacks,
     create_loguru_callbacks,
 )
-from multi_resource_limiter.interfaces.interfaces import PerModelConfig
-from multi_resource_limiter.interfaces.models import Quota, SecondsIn, UsageQuotas
-from multi_resource_limiter.limiter_backends.redis.backend import RedisBackendBuilder
-from multi_resource_limiter.rate_limiter import RateLimiter
+from multi_resource_rate_limiter._interfaces._interfaces import PerModelConfig
+from multi_resource_rate_limiter._interfaces._models import (
+    Quota,
+    SecondsIn,
+    UsageQuotas,
+)
+from multi_resource_rate_limiter._limiter_backends._redis._backend import (
+    RedisBackendBuilder,
+)
+from multi_resource_rate_limiter._rate_limiter import RateLimiter
 
 
 def openai_model_family_getter(model: str, /) -> str:

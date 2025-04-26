@@ -1,9 +1,8 @@
 from typing import Protocol, runtime_checkable
 
-from loguru import logger
 from pydantic import BaseModel, ConfigDict, Field
 
-from multi_resource_limiter.interfaces.models import Capacities, FrozenUsage
+from multi_resource_rate_limiter._interfaces._models import Capacities, FrozenUsage
 
 
 @runtime_checkable
@@ -15,7 +14,7 @@ class OnWaitStartCallback(Protocol):
         usage: FrozenUsage,
         preconsumption_capacities: Capacities,
     ) -> None:
-        """Called before waiting for capacity"""
+        """Called before waiting for capacity."""
 
 
 @runtime_checkable
@@ -98,6 +97,18 @@ class RateLimiterCallbacks(BaseModel):
     )
 
 
+def _get_loguru_logger():
+    try:
+        from loguru import logger
+
+        return logger
+    except ImportError as exc:
+        raise ImportError(
+            'The "loguru" package is required for logging callbacks. '
+            "Install it with: pip install loguru"
+        ) from exc
+
+
 def create_loguru_callbacks(
     *,
     wait_start: str | None = None,
@@ -114,6 +125,7 @@ def create_loguru_callbacks(
         usage: FrozenUsage,
         preconsumption_capacities: Capacities,
     ) -> None:
+        logger = _get_loguru_logger()
         logger.log(
             wait_start or default,
             "Rate limiter wait starting",
@@ -130,6 +142,7 @@ def create_loguru_callbacks(
         postconsumption_capacities: Capacities,
         wait_time_s: float,
     ) -> None:
+        logger = _get_loguru_logger()
         logger.log(
             wait_end_consumption or default,
             "Rate limiter wait complete",
@@ -148,6 +161,7 @@ def create_loguru_callbacks(
         postconsumption_capacities: Capacities,
         current_time: float,
     ) -> None:
+        logger = _get_loguru_logger()
         logger.log(
             capacity_consumed or default,
             "Rate limiter capacity consumed",
@@ -167,6 +181,7 @@ def create_loguru_callbacks(
         prerefund_capacities: Capacities,
         postrefund_capacities: Capacities,
     ) -> None:
+        logger = _get_loguru_logger()
         logger.log(
             capacity_refunded or default,
             "Rate limiter capacity refunded",
@@ -184,6 +199,7 @@ def create_loguru_callbacks(
         usage_metric: str,
         per_seconds: float,
     ) -> None:
+        logger = _get_loguru_logger()
         logger.log(
             missing_consumption_data or default,
             "Rate limiter missing consumption data",

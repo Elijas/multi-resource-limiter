@@ -3,8 +3,8 @@ from typing import Protocol, runtime_checkable
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from multi_resource_limiter.interfaces.callbacks import RateLimiterCallbacks
-from multi_resource_limiter.interfaces.models import (
+from multi_resource_rate_limiter._interfaces._callbacks import RateLimiterCallbacks
+from multi_resource_rate_limiter._interfaces._models import (
     CapacityReservation,
     FrozenUsage,
     Usage,
@@ -57,7 +57,7 @@ class PerModelConfigGetter(Protocol):
         ...
 
 
-class RateLimiterBackendBuilder(ABC):
+class RateLimiterBackendBuilderInterface(ABC):
     @abstractmethod
     def build(
         self,

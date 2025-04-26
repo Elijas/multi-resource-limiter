@@ -1,14 +1,17 @@
+import typing
 from typing import Protocol, cast, runtime_checkable
 
-import tiktoken
+if typing.TYPE_CHECKING:
+    from tiktoken import Encoding
+
 from frozendict import frozendict
 
-from multi_resource_limiter.interfaces.models import FrozenUsage
+from multi_resource_rate_limiter._interfaces._models import FrozenUsage
 
 
 @runtime_checkable
 class EncodingGetter(Protocol):
-    def __call__(self, model_name: str) -> tiktoken.Encoding: ...
+    def __call__(self, model_name: str) -> "Encoding": ...
 
 
 class OpenAIUsageCounter:
@@ -38,7 +41,7 @@ class OpenAIUsageCounter:
             ):
                 raise ValueError("All keys and values in messages must be of type str")
             messages = cast("list[dict[str, str]]", request["messages"])
-            tokens = _count_chat_input_tokens(
+            tokens = count_chat_input_tokens(
                 encoding,
                 messages=messages,
             )
@@ -47,8 +50,16 @@ class OpenAIUsageCounter:
         raise ValueError("Request must contain 'input', 'inputs', or 'messages'")
 
 
-def get_encoding(model_name: str) -> tiktoken.Encoding:
-    model_name = model_name.replace("openai/", "")
+def get_encoding(model_name: str) -> "Encoding":
+    try:
+        import tiktoken
+    except ImportError as exc:
+        raise ImportError(
+            'The "tiktoken" package is required for OpenAI token counting. '
+            'Install it with: pip install "multi-resource-rate-limiter[tiktoken]"'
+        ) from exc
+
+    model_name = model_name.partition("openai/")[2]
     substring_to_encoding = {
         "gpt-4o-mini": "o200k_base",
         "gpt-4o": "o200k_base",
@@ -72,8 +83,8 @@ def get_encoding(model_name: str) -> tiktoken.Encoding:
     return tiktoken.encoding_for_model(model_name)
 
 
-def _count_chat_input_tokens(
-    encoding: tiktoken.Encoding,
+def count_chat_input_tokens(
+    encoding: "Encoding",
     messages: list[dict[str, str]],
     **_,
 ) -> int:
