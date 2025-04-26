@@ -15,6 +15,7 @@ Rate limit API requests across different resources and workers without wasting y
 - Returns unused tokens to your quota automatically
 - Prevents hitting API rate limits while maximizing throughput
 - Robust against race-conditions through the use Redis-locked atomic operations. Note: you can bring your own backend if you don't want to use Redis.
+- Implements the [generic cell rate algorithm,](https://en.wikipedia.org/wiki/Generic_cell_rate_algorithm) a variant of the leaky bucket pattern with a millisecond precision.
 
 Note: the API may unexpectedly change with future minor versions, therefore install with:
 
