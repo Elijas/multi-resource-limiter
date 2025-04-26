@@ -5,6 +5,22 @@ import re
 from pathlib import Path
 
 
+def _replace_install_line(content: str, version: str) -> str:
+    major, minor, *_ = version.split(".")
+    next_minor = f"{major}.{int(minor)+1}.0"
+    new_line = f'pip install "multi-resource-rate-limiter>={version},<{next_minor}"'
+    new_content, n = re.subn(
+        r'pip install "multi-resource-rate-limiter>=\d+\.\d+\.\d+,<\d+\.\d+\.\d+"',
+        new_line,
+        content,
+    )
+    if n == 0:
+        raise RuntimeError(
+            "No matching pip install line found in README.md for pip install"
+        )
+    return new_content
+
+
 def _replace_version_badge(content: str, version: str) -> str:
     # Replace the shields.io badge version in the URL and label
     # Example: https://img.shields.io/badge/0.0.1-version?color=active&style=flat&label=version
@@ -23,6 +39,7 @@ def _replace_version_badge(content: str, version: str) -> str:
 
 def update_readme(readme_path: Path, version: str) -> None:
     content = readme_path.read_text(encoding="utf-8")
+    content = _replace_install_line(content, version)
     content = _replace_version_badge(content, version)
     readme_path.write_text(content, encoding="utf-8")
 
