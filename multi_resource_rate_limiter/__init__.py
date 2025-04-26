@@ -47,7 +47,7 @@ from multi_resource_rate_limiter._limiter_backends._redis._bucket import (
     CalculatedCapacity,
 )
 
-__version__ = "0.1.2"
+__version__ = "0.1.3"
 __all__ = [
     "LOCK_TIMEOUT_SECONDS",
     "BucketId",
