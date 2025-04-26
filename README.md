@@ -14,6 +14,7 @@ Rate limit API requests across different resources and workers without wasting y
 - Works across multiple servers/workers
 - Returns unused tokens to your quota automatically
 - Prevents hitting API rate limits while maximizing throughput
+- Robust against race-conditions through the use Redis-locked atomic operations. Note: you can bring your own backend if you don't want to use Redis.
 
 Note: the API may unexpectedly change with future minor versions, therefore install with:
 
