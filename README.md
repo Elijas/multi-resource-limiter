@@ -3,7 +3,7 @@
 [![Status: Experimental](https://img.shields.io/badge/status-experimental-gold.svg?style=flat)](https://github.com/mkenney/software-guides/blob/master/STABILITY-BADGES.md#experimental)
 [![Maintained: yes](https://img.shields.io/badge/yes-43cd0f.svg?style=flat&label=maintained)](https://github.com/Elijas/token-throttle/issues)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-43cd0f.svg?style=flat&label=license)](LICENSE)
-<a href="https://pypi.org/project/token-throttle"><img src="https://img.shields.io/badge/v0.1.7-version?color=43cd0f&style=flat&label=pypi" alt="PyPI version" /></a>
+<a href="https://pypi.org/project/token-throttle"><img src="https://img.shields.io/badge/v0.1.8-version?color=43cd0f&style=flat&label=pypi" alt="PyPI version" /></a>
 <a href="https://github.com/astral-sh/ruff?style=flat"><img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json" alt="Ruff"></a>
 
 **Simple Multi-Resource Rate Limiting That Saves Unused Tokens.**
@@ -19,7 +19,7 @@ Rate limit API requests across different resources and workers without wasting y
 Note: the API may unexpectedly change with future minor versions, therefore install with:
 
 ```bash
-pip install "token-throttle[redis,tiktoken]>=0.1.7,<0.2.0"
+pip install "token-throttle[redis,tiktoken]>=0.1.8,<0.2.0"
 ```
 
 Found this useful? Star the repo on GitHub to show support and follow for updates. Also, find me on Discord if you have questions or would like to join a discussion!
