@@ -14,6 +14,7 @@ except ImportError as exc:
         'Install it with: pip install "token-throttle[redis]"'
     ) from exc
 from frozendict import frozendict
+
 from token_throttle._interfaces._callbacks import RateLimiterCallbacks
 from token_throttle._interfaces._interfaces import (
     PerModelConfig,

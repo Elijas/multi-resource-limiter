@@ -356,6 +356,7 @@ class RedisBackend(RateLimiterBackend):
             The refund will:
             1. Apply a negative refund of -20 tokens (100-120)
             2. Update the timestamp to N=10
+
         """
         # Calculate how much to refund for each metric
         refund_usage_: dict[str, float] = {}

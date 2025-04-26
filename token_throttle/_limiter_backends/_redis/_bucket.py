@@ -10,6 +10,7 @@ except ImportError as exc:
         'Install it with: pip install "token-throttle[redis]"'
     ) from exc
 from pydantic import BaseModel
+
 from token_throttle._interfaces._interfaces import PerModelConfig
 from token_throttle._interfaces._models import Quota
 

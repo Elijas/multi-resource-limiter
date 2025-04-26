@@ -5,6 +5,7 @@ if typing.TYPE_CHECKING:
     from tiktoken import Encoding
 
 from frozendict import frozendict
+
 from token_throttle._interfaces._models import FrozenUsage
 
 

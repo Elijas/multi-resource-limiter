@@ -1,6 +1,7 @@
 from typing import Protocol, runtime_checkable
 
 from pydantic import BaseModel, ConfigDict, Field
+
 from token_throttle._interfaces._models import Capacities, FrozenUsage
 
 
