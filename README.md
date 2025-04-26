@@ -8,6 +8,19 @@
 
 **Token-aware rate limiting with reservation-refund of unused tokens. Rate limit access to multiple resources with multiple resource quotas across multiple workers.**
 
+This is a tool I built as a rewrite of [openlimit](https://github.com/shobrook/openlimit/issues/20#issuecomment-2782677483) after [not finding any good Python solutions for rate limiting](https://gist.github.com/justinvanwinkle/d9f04950083c4554835c1a35f9d22dad), especially the ones that would be token-aware and had unused token refund capability. Note: the API may unexpectedly change with future minor versions, therefore install with:
+
+```bash
+pip install "multi-resource-rate-limiter>=0.16.18,<0.17.0"
+```
+
+Found this useful? Star the repo on GitHub to show support and follow for updates. Also, find me on Discord if you have questions or would like to join a discussion!
+
+![GitHub Repo stars](https://img.shields.io/github/stars/elijas/multi-resource-rate-limiter?style=flat&color=fcfcfc&labelColor=white&logo=github&logoColor=black&label=stars)
+&nbsp;<a href="https://discord.gg/hCppPqm6"><img alt="Discord server invite" src="https://img.shields.io/discord/1119368998161752075?logo=discord&logoColor=white&style=flat&color=fcfcfc&labelColor=7289da" height="20"></a>
+
+### Introduction
+
 - Rate-limit multiple resources such as requests and tokens and apples and bananas at the same time
   - This is needed because different APIs have different resource rules, e,g, Anthropic counts request and completion tokens separately.
   - While this was originally intended for LLM APIs, it's fully customizable: you can limit bananas per 32-second-time-windows and apples per 2-minute-window simultaneously. You can also connect (through Dependency Injection) your own backend if you don't want Redis.
@@ -16,8 +29,6 @@
 - Rate-limit each resource on it's own set of quotas
 - Reserve usage while the request is being completed, and then refund/adjust according to actual usage after the request completes
 - Refund unused resources (such as unused tokens).
-
-This is a tool I built as a rewrite of [openlimit](https://github.com/shobrook/openlimit/issues/20#issuecomment-2782677483) after [not finding any good python rate limiting solutions](https://gist.github.com/justinvanwinkle/d9f04950083c4554835c1a35f9d22dad), especially the ones that would be suitable for token-aware rate limiting.
 
 Treat this as an early preview (no unit tests or extensive testing) but it was stable and worked correctly for my use cases.
 
