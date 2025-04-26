@@ -32,10 +32,17 @@ Found this useful? Star the repo on GitHub to show support and follow for update
 
 Treat this as an early preview (no unit tests or extensive testing) but it was stable and worked correctly for my use cases.
 
-### Illustrating example
+### Illustrating use case
+
+- Imagine you have a single API key to your provider.
+- Only up to 10% of the key's throughput capacity is used by a continuously running production service.
+- You want to run a massively parallelized LLM data processing workflow with the same key.
+- But you need to do it without bringing down the production (or your workflow) with 429 Too Many Requests errors.
+- Also, leaving latency on the table is not a good solution; you want the batch results as soon as possible.
 
 > [!NOTE]
-> Note, this example uses [BAML](https://github.com/BoundaryML/baml) to call LLMs, but you can use absolutely anything, because all you need is just a way to retrieve tokens used in request and actual tokens used in the response. Also note that (Optionally) you can use already existing utilities in `multi-resource-rate-limiter` to calculate/extract these two values automatically from OpenAI-compatible requests and responses.
+> Note, this example uses [BAML](https://github.com/BoundaryML/baml) to call LLMs, but you can use absolutely anything, because all you need is just a way to retrieve tokens used in the request and actual tokens used in the response. Also note that (optionally) you can use already existing utilities in `multi-resource-rate-limiter` to calculate/extract these two values automatically from OpenAI-compatible requests and responses.
+
 
 ```python
 from baml_client import b
