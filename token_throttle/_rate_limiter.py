@@ -1,14 +1,14 @@
 import asyncio
 
-from multi_resource_rate_limiter._interfaces._callbacks import RateLimiterCallbacks
-from multi_resource_rate_limiter._interfaces._interfaces import (
+from token_throttle._interfaces._callbacks import RateLimiterCallbacks
+from token_throttle._interfaces._interfaces import (
     BaseRateLimiter,
     PerModelConfig,
     PerModelConfigGetter,
     RateLimiterBackend,
     RateLimiterBackendBuilderInterface,
 )
-from multi_resource_rate_limiter._interfaces._models import (
+from token_throttle._interfaces._models import (
     CapacityReservation,
     FrozenUsage,
     Usage,

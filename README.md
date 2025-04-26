@@ -1,25 +1,34 @@
-# multi-resource-rate-limiter
+# token-throttle
 
 [![Status: Experimental](https://img.shields.io/badge/status-experimental-gold.svg?style=flat)](https://github.com/mkenney/software-guides/blob/master/STABILITY-BADGES.md#experimental)
-[![Maintained: yes](https://img.shields.io/badge/yes-43cd0f.svg?style=flat&label=maintained)](https://github.com/Elijas/multi-resource-rate-limiter/issues)
+[![Maintained: yes](https://img.shields.io/badge/yes-43cd0f.svg?style=flat&label=maintained)](https://github.com/Elijas/token-throttle/issues)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-43cd0f.svg?style=flat&label=license)](LICENSE)
-<a href="https://pypi.org/project/multi-resource-rate-limiter"><img src="https://img.shields.io/badge/v0.1.6-version?color=43cd0f&style=flat&label=pypi" alt="PyPI version" /></a>
+<a href="https://pypi.org/project/token-throttle"><img src="https://img.shields.io/badge/v0.1.6-version?color=43cd0f&style=flat&label=pypi" alt="PyPI version" /></a>
 <a href="https://github.com/astral-sh/ruff?style=flat"><img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json" alt="Ruff"></a>
 
-**Token-aware rate limiting with reservation-refund of unused tokens. Rate limit access to multiple resources with multiple resource quotas across multiple workers.**
+**Simple Multi-Resource Rate Limiting That Saves Unused Tokens.**
 
-This is a tool I built as a rewrite of [openlimit](https://github.com/shobrook/openlimit/issues/20#issuecomment-2782677483) after [not finding any good Python solutions for rate limiting](https://gist.github.com/justinvanwinkle/d9f04950083c4554835c1a35f9d22dad), especially the ones that would be token-aware and had unused token refund capability. Note: the API may unexpectedly change with future minor versions, therefore install with:
+Rate limit API requests across different resources and workers without wasting your quota. Reserve tokens upfront, get refunds for what you don't use, and avoid over-limiting.
+
+- Limits requests across multiple services (like OpenAI, Anthropic)
+- Works across multiple servers/workers
+- Returns unused tokens to your quota automatically
+- Prevents hitting API rate limits while maximizing throughput
+
+Note: the API may unexpectedly change with future minor versions, therefore install with:
 
 ```bash
-pip install "multi-resource-rate-limiter[redis,tiktoken]>=0.1.6,<0.2.0"
+pip install "token-throttle[redis,tiktoken]>=0.1.6,<0.2.0"
 ```
 
 Found this useful? Star the repo on GitHub to show support and follow for updates. Also, find me on Discord if you have questions or would like to join a discussion!
 
-![GitHub Repo stars](https://img.shields.io/github/stars/elijas/multi-resource-rate-limiter?style=flat&color=fcfcfc&labelColor=white&logo=github&logoColor=black&label=stars)
+![GitHub Repo stars](https://img.shields.io/github/stars/elijas/token-throttle?style=flat&color=fcfcfc&labelColor=white&logo=github&logoColor=black&label=stars)
 &nbsp;<a href="https://discord.gg/hCppPqm6"><img alt="Discord server invite" src="https://img.shields.io/discord/1119368998161752075?logo=discord&logoColor=white&style=flat&color=fcfcfc&labelColor=7289da" height="20"></a>
 
 ### Introduction
+
+This is a tool I built as a rewrite of [openlimit](https://github.com/shobrook/openlimit/issues/20#issuecomment-2782677483) after [not finding any good Python solutions for rate limiting](https://gist.github.com/justinvanwinkle/d9f04950083c4554835c1a35f9d22dad), especially the ones that would be token-aware and had unused token refund capability.
 
 - Rate-limit multiple resources such as requests and tokens and apples and bananas at the same time
   - This is needed because different APIs have different resource rules, e,g, Anthropic counts request and completion tokens separately.
@@ -41,8 +50,7 @@ Treat this as an early preview (no unit tests or extensive testing) but it was s
 - Also, leaving latency on the table is not a good solution; you want the batch results as soon as possible.
 
 > [!NOTE]
-> Note, this example uses [BAML](https://github.com/BoundaryML/baml) to call LLMs, but you can use absolutely anything, because all you need is just a way to retrieve tokens used in the request and actual tokens used in the response. Also note that (optionally) you can use already existing utilities in `multi-resource-rate-limiter` to calculate/extract these two values automatically from OpenAI-compatible requests and responses.
-
+> Note, this example uses [BAML](https://github.com/BoundaryML/baml) to call LLMs, but you can use absolutely anything, because all you need is just a way to retrieve tokens used in the request and actual tokens used in the response. Also note that (optionally) you can use already existing utilities in `token-throttle` to calculate/extract these two values automatically from OpenAI-compatible requests and responses.
 
 ```python
 from baml_client import b
@@ -99,7 +107,7 @@ async def massively_parallelized():
 
 ### Features
 
-Here are the key features of `multi-resource-limiter`, explained:
+Here are the key features of `token-throttle`, explained:
 
 - **Multi-Resource Limiting:**
 

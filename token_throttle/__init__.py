@@ -1,15 +1,15 @@
-from multi_resource_rate_limiter import RateLimiter
-from multi_resource_rate_limiter._factories._openai._openai_rate_limiter import (
+from token_throttle import RateLimiter
+from token_throttle._factories._openai._openai_rate_limiter import (
     create_openai_redis_rate_limiter,
     openai_model_family_getter,
 )
-from multi_resource_rate_limiter._factories._openai._token_counter import (
+from token_throttle._factories._openai._token_counter import (
     EncodingGetter,
     OpenAIUsageCounter,
     count_chat_input_tokens,
     get_encoding,
 )
-from multi_resource_rate_limiter._interfaces._callbacks import (
+from token_throttle._interfaces._callbacks import (
     OnCapacityConsumedCallback,
     OnCapacityRefundedCallback,
     OnMissingConsumptionDataCallback,
@@ -18,13 +18,13 @@ from multi_resource_rate_limiter._interfaces._callbacks import (
     RateLimiterCallbacks,
     create_loguru_callbacks,
 )
-from multi_resource_rate_limiter._interfaces._interfaces import (
+from token_throttle._interfaces._interfaces import (
     PerModelConfig,
     PerModelConfigGetter,
     RateLimiterBackendBuilderInterface,
     UsageCounter,
 )
-from multi_resource_rate_limiter._interfaces._models import (
+from token_throttle._interfaces._models import (
     BucketId,
     Capacities,
     CapacityReservation,
@@ -37,15 +37,13 @@ from multi_resource_rate_limiter._interfaces._models import (
     UsageQuotas,
     frozen_usage,
 )
-from multi_resource_rate_limiter._limiter_backends._redis._backend import (
+from token_throttle._limiter_backends._redis._backend import (
     LOCK_TIMEOUT_SECONDS,
     CapacitiesGetterResult,
     RedisBackend,
     RedisBackendBuilder,
 )
-from multi_resource_rate_limiter._limiter_backends._redis._bucket import (
-    CalculatedCapacity,
-)
+from token_throttle._limiter_backends._redis._bucket import CalculatedCapacity
 
 __version__ = "0.1.6"
 __all__ = [

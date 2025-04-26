@@ -7,12 +7,11 @@ try:
 except ImportError as exc:
     raise ImportError(
         'The "redis" package is required for the Redis backend. '
-        'Install it with: pip install "multi-resource-rate-limiter[redis]"'
+        'Install it with: pip install "token-throttle[redis]"'
     ) from exc
 from pydantic import BaseModel
-
-from multi_resource_rate_limiter._interfaces._interfaces import PerModelConfig
-from multi_resource_rate_limiter._interfaces._models import Quota
+from token_throttle._interfaces._interfaces import PerModelConfig
+from token_throttle._interfaces._models import Quota
 
 
 class CalculatedCapacity(BaseModel):

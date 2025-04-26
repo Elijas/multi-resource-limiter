@@ -5,8 +5,7 @@ if typing.TYPE_CHECKING:
     from tiktoken import Encoding
 
 from frozendict import frozendict
-
-from multi_resource_rate_limiter._interfaces._models import FrozenUsage
+from token_throttle._interfaces._models import FrozenUsage
 
 
 @runtime_checkable
@@ -56,7 +55,7 @@ def get_encoding(model_name: str) -> "Encoding":
     except ImportError as exc:
         raise ImportError(
             'The "tiktoken" package is required for OpenAI token counting. '
-            'Install it with: pip install "multi-resource-rate-limiter[tiktoken]"'
+            'Install it with: pip install "token-throttle[tiktoken]"'
         ) from exc
 
     model_name = model_name.partition("openai/")[2]

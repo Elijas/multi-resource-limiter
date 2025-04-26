@@ -11,17 +11,16 @@ try:
 except ImportError as exc:
     raise ImportError(
         'The "redis" package is required for the Redis backend. '
-        'Install it with: pip install "multi-resource-rate-limiter[redis]"'
+        'Install it with: pip install "token-throttle[redis]"'
     ) from exc
 from frozendict import frozendict
-
-from multi_resource_rate_limiter._interfaces._callbacks import RateLimiterCallbacks
-from multi_resource_rate_limiter._interfaces._interfaces import (
+from token_throttle._interfaces._callbacks import RateLimiterCallbacks
+from token_throttle._interfaces._interfaces import (
     PerModelConfig,
     RateLimiterBackend,
     RateLimiterBackendBuilderInterface,
 )
-from multi_resource_rate_limiter._interfaces._models import Capacities, FrozenUsage
+from token_throttle._interfaces._models import Capacities, FrozenUsage
 
 from ._bucket import RedisBucket
 

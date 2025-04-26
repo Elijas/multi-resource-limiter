@@ -1,7 +1,7 @@
 [project]
-name = "multi-resource-limiter"
+name = "token-throttle"
 version = "0.1.6"
-description = "Robust Asyncio Rate Limiter for Complex API Quotas (Tokens, Requests, etc.)."
+description = "Simple Multi-Resource Rate Limiting That Saves Unused Tokens. Rate limit API requests across different resources and workers without wasting your quota. Reserve tokens upfront, get refunds for what you don't use, and avoid over-limiting."
 readme = "README.md"
 
 ##############################
@@ -50,7 +50,7 @@ pre_commit_hooks = []
 post_commit_hooks = []
 
 [[tool.bumpversion.files]]
-filename = "multi_resource_rate_limiter/__init__.py"
+filename = "token_throttle/__init__.py"
 search = '__version__ = "{current_version}"'
 replace = '__version__ = "{new_version}"'
 
@@ -63,7 +63,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build]
-packages = ["multi_resource_rate_limiter"]
+packages = ["token_throttle"]
 
 ##############################
 ### PYTEST AND COVERAGE
@@ -74,7 +74,7 @@ testpaths = ["tests"]
 addopts = "--import-mode=importlib"
 
 [tool.coverage.run]
-source = ["multi_resource_rate_limiter"]
+source = ["token_throttle"]
 branch = true
 
 [tool.coverage.report]

@@ -1,26 +1,22 @@
 import re
-import typing
 
-if typing.TYPE_CHECKING:
-    from redis.asyncio import Redis as AsyncioRedis
+try:
+    import redis.asyncio as redis
+except ImportError as exc:
+    raise ImportError(
+        'The "redis" package is required for the OpenAI Redis rate limiter backend. '
+        'Install it with: pip install "token-throttle[redis]"'
+    ) from exc
 
-from multi_resource_rate_limiter._factories._openai._token_counter import (
-    OpenAIUsageCounter,
-)
-from multi_resource_rate_limiter._interfaces._callbacks import (
+from token_throttle._factories._openai._token_counter import OpenAIUsageCounter
+from token_throttle._interfaces._callbacks import (
     RateLimiterCallbacks,
     create_loguru_callbacks,
 )
-from multi_resource_rate_limiter._interfaces._interfaces import PerModelConfig
-from multi_resource_rate_limiter._interfaces._models import (
-    Quota,
-    SecondsIn,
-    UsageQuotas,
-)
-from multi_resource_rate_limiter._limiter_backends._redis._backend import (
-    RedisBackendBuilder,
-)
-from multi_resource_rate_limiter._rate_limiter import RateLimiter
+from token_throttle._interfaces._interfaces import PerModelConfig
+from token_throttle._interfaces._models import Quota, SecondsIn, UsageQuotas
+from token_throttle._limiter_backends._redis._backend import RedisBackendBuilder
+from token_throttle._rate_limiter import RateLimiter
 
 
 def openai_model_family_getter(model: str, /) -> str:
@@ -29,7 +25,7 @@ def openai_model_family_getter(model: str, /) -> str:
 
 
 def create_openai_redis_rate_limiter(
-    redis_client: "AsyncioRedis",
+    redis_client: redis.Redis,
     *,
     rpm: int,
     tpm: int,

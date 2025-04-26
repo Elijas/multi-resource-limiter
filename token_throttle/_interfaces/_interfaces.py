@@ -2,9 +2,8 @@ from abc import ABC, abstractmethod
 from typing import Protocol, runtime_checkable
 
 from pydantic import BaseModel, ConfigDict, Field
-
-from multi_resource_rate_limiter._interfaces._callbacks import RateLimiterCallbacks
-from multi_resource_rate_limiter._interfaces._models import (
+from token_throttle._interfaces._callbacks import RateLimiterCallbacks
+from token_throttle._interfaces._models import (
     CapacityReservation,
     FrozenUsage,
     Usage,
