@@ -34,6 +34,9 @@ Treat this as an early preview (no unit tests or extensive testing) but it was s
 
 ### Illustrating example
 
+> [!NOTE]
+> Note, this example uses [BAML](https://github.com/BoundaryML/baml) to call LLMs, but you can use absolutely anything, because all you need is just a way to retrieve tokens used in request and actual tokens used in the response. Also note that (Optionally) you can use already existing utilities in `multi-resource-rate-limiter` to calculate/extract these two values automatically from OpenAI-compatible requests and responses.
+
 ```python
 from baml_client import b
 from baml_py import Collector
