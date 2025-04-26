@@ -3,7 +3,7 @@
 [![Status: Experimental](https://img.shields.io/badge/status-experimental-gold.svg?style=flat)](https://github.com/mkenney/software-guides/blob/master/STABILITY-BADGES.md#experimental)
 [![Maintained: yes](https://img.shields.io/badge/yes-43cd0f.svg?style=flat&label=maintained)](https://github.com/Elijas/multi-resource-rate-limiter/issues)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-43cd0f.svg?style=flat&label=license)](LICENSE)
-<a href="https://pypi.org/project/multi-resource-rate-limiter"><img src="https://img.shields.io/badge/v0.1.1-version?color=43cd0f&style=flat&label=pypi" alt="PyPI version" /></a>
+<a href="https://pypi.org/project/multi-resource-rate-limiter"><img src="https://img.shields.io/badge/v0.1.2-version?color=43cd0f&style=flat&label=pypi" alt="PyPI version" /></a>
 <a href="https://github.com/astral-sh/ruff?style=flat"><img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json" alt="Ruff"></a>
 
 **Token-aware rate limiting with reservation-refund of unused tokens. Rate limit access to multiple resources with multiple resource quotas across multiple workers.**
