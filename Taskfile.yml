@@ -31,7 +31,7 @@ tasks:
     desc: Run pytest-watch with coverage reporting
     aliases: [twc, tcw]
   ##############################
-  ### LINT
+  ### LINT AND DEPENDENCIES
   ##############################
   lint:
     cmds:
@@ -44,6 +44,11 @@ tasks:
       - uv run ruff check --fix --watch
     desc: Run Ruff linter in watch mode with auto-fix
     aliases: [lw]
+  upgrade-dependencies:
+    desc: Upgrade all project dependencies to their latest compatible versions
+    cmds:
+      - uv sync --upgrade
+    aliases: [ud]
   ##############################
   ### PUBLISH
   ##############################
