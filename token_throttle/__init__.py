@@ -45,7 +45,7 @@ from token_throttle._limiter_backends._redis._backend import (
 )
 from token_throttle._limiter_backends._redis._bucket import CalculatedCapacity
 
-__version__ = "0.1.12"
+__version__ = "0.2.0"
 __all__ = [
     "LOCK_TIMEOUT_SECONDS",
     "BucketId",
