@@ -1,8 +1,12 @@
 import re
-import typing
 
-if typing.TYPE_CHECKING:
-    from redis.asyncio import Redis as AsyncioRedis
+try:
+    import redis.asyncio as redis
+except ImportError as exc:
+    raise ImportError(
+        'The "redis" package is required for the OpenAI Redis rate limiter backend. '
+        'Install it with: pip install "token-throttle[redis]"'
+    ) from exc
 
 from token_throttle._factories._openai._token_counter import OpenAIUsageCounter
 from token_throttle._interfaces._callbacks import (
@@ -21,7 +25,7 @@ def openai_model_family_getter(model: str, /) -> str:
 
 
 def create_openai_redis_rate_limiter(
-    redis_client: "AsyncioRedis",
+    redis_client: redis.Redis,
     *,
     rpm: int,
     tpm: int,
