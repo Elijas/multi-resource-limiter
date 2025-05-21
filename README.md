@@ -7,6 +7,24 @@
 [![PyPI Downloads](https://img.shields.io/pypi/dm/token-throttle?color=43cd0f&style=flat&label=downloads)](https://pypistats.org/packages/token-throttle)
 [![Linter: Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 
+```python
+def get_quota_per_model(model_name: str):
+    if model_name == "gemini-2.5-pro":
+        return UsageQuotas([
+            Quota(metric="requests", limit=2_000, per_seconds=60),
+            Quota(metric="tokens", limit=3_000_000, per_seconds=60),
+            Quota(metric="requests", limit=10_000_000, per_seconds=86400),
+        ])
+    if model_name == "gemini-2.5-flash":
+        return ...
+    
+
+gemini_rate_limiter = RateLimiter(
+    get_quota_per_model,
+    backend=RedisBackendBuilder(redis_client),
+)
+```
+
 **Simple Multi-Resource Rate Limiting That Saves Unused Tokens.**
 
 Rate limit API requests across different resources and workers without wasting your quota. Reserve tokens upfront, get refunds for what you don't use, and avoid over-limiting.
