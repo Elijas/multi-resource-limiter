@@ -1,4 +1,3 @@
-from token_throttle._rate_limiter import RateLimiter
 from token_throttle._factories._openai._openai_rate_limiter import (
     create_openai_redis_rate_limiter,
     openai_model_family_getter,
@@ -44,8 +43,9 @@ from token_throttle._limiter_backends._redis._backend import (
     RedisBackendBuilder,
 )
 from token_throttle._limiter_backends._redis._bucket import CalculatedCapacity
+from token_throttle._rate_limiter import RateLimiter
 
-__version__ = "0.4.1"
+__version__ = "0.4.2"
 __all__ = [
     "LOCK_TIMEOUT_SECONDS",
     "BucketId",

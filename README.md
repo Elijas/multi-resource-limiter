@@ -3,7 +3,7 @@
 [![Status: Experimental](https://img.shields.io/badge/status-experimental-gold.svg?style=flat)](https://github.com/mkenney/software-guides/blob/master/STABILITY-BADGES.md#experimental)
 [![Maintained: yes](https://img.shields.io/badge/yes-43cd0f.svg?style=flat&label=maintained)](https://github.com/Elijas/token-throttle/issues)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-43cd0f.svg?style=flat&label=license)](LICENSE)
-[![PyPI Version](https://img.shields.io/badge/v0.4.1-version?color=43cd0f&style=flat&label=pypi)](https://pypi.org/project/token-throttle)
+[![PyPI Version](https://img.shields.io/badge/v0.4.2-version?color=43cd0f&style=flat&label=pypi)](https://pypi.org/project/token-throttle)
 [![PyPI Downloads](https://img.shields.io/pypi/dm/token-throttle?color=43cd0f&style=flat&label=downloads)](https://pypistats.org/packages/token-throttle)
 [![Linter: Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 
@@ -39,7 +39,7 @@ Rate limit API requests across different resources and workers without wasting y
 Note: the API may unexpectedly change with future minor versions, therefore install with:
 
 ```bash
-pip install "token-throttle[redis,tiktoken]>=0.4.1,<0.5.0"
+pip install "token-throttle[redis,tiktoken]>=0.4.2,<0.5.0"
 ```
 
 Found this useful? Star the repo on GitHub to show support and follow for updates. Also, find me on Discord if you have questions or would like to join a discussion!
