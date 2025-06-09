@@ -1,4 +1,4 @@
-from token_throttle import RateLimiter
+from token_throttle._rate_limiter import RateLimiter
 from token_throttle._factories._openai._openai_rate_limiter import (
     create_openai_redis_rate_limiter,
     openai_model_family_getter,
